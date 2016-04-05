@@ -64,7 +64,7 @@ void main()
 		{
 			if (Broken == false)
 			{
-				drawTexture(T, pos.x, pos.y, dim.x * 2, dim.y * 2, 0, true, 0, color);
+				drawTexture(T, pos.x, pos.y, dim.x * 2, dim.y * 2, 0 , true, 0, color);
 				if (HP == 3) { color = SKY_BLUE; T = T1; }
 				if (HP == 2) { color = PURPLE; T = T2; }
 				if (HP == 1) { color = BLUE; T = T3; }
@@ -83,7 +83,6 @@ void main()
 		y++;
 		if (y == 6) { y = -5; z++; }
 	}
-	Vec2 q;
 
 A:
 
