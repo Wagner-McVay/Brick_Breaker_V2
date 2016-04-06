@@ -29,18 +29,13 @@ float get3DAngle(const Vec3 &a, const Vec3 &b)
 	return angle;
 }
 
-bool pointCollision(const Vec2 &a, const Vec2 &b1, const Vec2 &b2)
+bool PointLineCollision(const Vec2 &a, const Vec2 &b1, const Vec2 &b2)
 {
 
 	float A, B, C, D;
 
 	Vec2 AB = a - b1;
 	Vec2 CD = b2 - b1;
-
-	A = a.x - b1.x;
-	B = a.y - b1.y;
-	C = b2.x - b1.x;
-	D = b2.y - b1.y;
 
 	float para = dot(AB, CD) / dot(CD, CD);
 
@@ -71,18 +66,19 @@ bool pointCollision(const Vec2 &a, const Vec2 &b1, const Vec2 &b2)
 	else return false;
 }
 
-bool LineCollision(const Vec2 &a1, const Vec2 &a2, const Vec2 &b1, const Vec2 &b2)
+bool LineLineCollision(const Vec2 &a1, const Vec2 &a2, const Vec2 &b1, const Vec2 &b2)
 {
-	
-	float A, B, C, D;
+	float denominator = ((a2.x - a1.x) * (b2.y - b1.y)) - ((a2.y - a1.y) * (b2.x - b1.x));
+	float numerator1 = ((a1.y - b1.y) * (b2.x - b1.x)) - ((a1.x - b1.x) * (b2.y - b1.y));
+	float numerator2 = ((a1.y - b1.y) * (a2.x - a1.x)) - ((a1.x - b1.x) * (a2.y - a1.y));
 
-	A =
+	// Detect coincident lines (has a problem, read below)
+	if (denominator == 0) return numerator1 == 0 && numerator2 == 0;
 
-	if ((((pos1.x - dim1.x) <= (pos2.x + dim2.x)) && ((pos1.x + dim1.x) >= (pos2.x - dim2.x))) && (((pos1.y - dim1.y) <= (pos2.y + dim2.y)) && ((pos1.y + dim1.y) >= (pos2.y - dim2.y))))
-	{
-		return true;
-	}
-	else return false;
+	float r = numerator1 / denominator;
+	float s = numerator2 / denominator;
+
+	return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
 }
 
 
